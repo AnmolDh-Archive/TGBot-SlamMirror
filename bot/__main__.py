@@ -182,8 +182,7 @@ BotCommand(f'{BotCommands.WatchCommand}','Mirror YT-DL support link'),
 BotCommand(f'{BotCommands.TarWatchCommand}','Mirror Youtube playlist link as tar'),
 BotCommand(f'{BotCommands.CancelMirror}','Cancel a task'),
 BotCommand(f'{BotCommands.ListCommand}',' [query] Searches files in G-Drive'),
-BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message'),
-BotCommand(f'{BotCommands.StatsCommand}','Bot Usage Stats'),]
+BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message'),]
 
 
 def main():
