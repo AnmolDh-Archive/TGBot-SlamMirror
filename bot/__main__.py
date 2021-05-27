@@ -57,8 +57,8 @@ This bot can mirror all your links to Google drive!
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
     buttons = button_build.ButtonMaker()
-    buttons.buildbutton("Owner", "https://t.me/Anmol_Dh")
-    buttons.buildbutton("We◉NúbGang", "https://t.me/WeNubGang")
+    buttons.buildbutton("Mirror Group", "https://t.me/WeNubMirrors")
+    buttons.buildbutton("We◉NúbGang / OT", "https://t.me/WeNubGang")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     update.effective_message.reply_photo(IMAGE_URL, start_string, parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup)
 
