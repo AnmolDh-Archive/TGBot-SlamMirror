@@ -1,0 +1,28 @@
+class _BotCommands:
+    def __init__(self):
+        self.StartCommand = 'start'
+        self.MirrorCommand = 'mirrorms'
+        self.UnzipMirrorCommand = 'unzipmirrorms'
+        self.TarMirrorCommand = 'tarmirrorms'
+        self.CancelMirror = 'cancelms'
+        self.CancelAllCommand = 'cancelallms'
+        self.ListCommand = 'listms'
+        self.StatusCommand = 'statusms'
+        self.AuthorizedUsersCommand = 'usersms'
+        self.AuthorizeCommand = 'authorizems'
+        self.UnAuthorizeCommand = 'unauthorizems'
+        self.AddSudoCommand = 'addsudoms'
+        self.RmSudoCommand = 'rmsudoms'
+        self.PingCommand = 'pingms'
+        self.RestartCommand = 'restartlms'
+        self.StatsCommand = 'statms'
+        self.HelpCommand = 'helpms'
+        self.LogCommand = 'logms'
+        self.SpeedCommand = 'speedtestms'
+        self.CloneCommand = 'clonems'
+        self.WatchCommand = 'watchms'
+        self.TarWatchCommand = 'tarwatchms'
+        self.DeleteCommand = 'delms'
+        self.UsageCommand = 'usagems'
+
+BotCommands = _BotCommands()
