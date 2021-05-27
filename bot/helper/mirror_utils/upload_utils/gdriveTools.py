@@ -485,7 +485,7 @@ class GoogleDriveHelper:
             Telegraph(access_token=telegraph_token).edit_page(path = self.path[prev_page],
                                  title = 'We◉NúbGang',
                                  author_name='We◉NúbGang',
-                                 author_url='https://t.me/WeNubGang',
+                                 author_url='https://t.me/WeNubMirrors',
                                  html_content=content)
         return
 
@@ -564,7 +564,7 @@ class GoogleDriveHelper:
                 self.path.append(Telegraph(access_token=telegraph_token).create_page(
                                                         title = 'We◉NúbGang',
                                                         author_name='We◉NúbGang',
-                                                        author_url='https://t.me/WeNubGang',
+                                                        author_url='https://t.me/WeNubMirrors',
                                                         html_content=content
                                                         )['path'])
 
