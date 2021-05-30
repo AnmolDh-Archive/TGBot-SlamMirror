@@ -1,7 +1,7 @@
 class _BotCommands:
     def __init__(self):
         self.StartCommand = 'start'
-        self.MirrorCommand = 'mirrorml@CmdTestBot'
+        self.MirrorCommand = 'mirrorml'
         self.UnzipMirrorCommand = 'unzipmirrorml'
         self.TarMirrorCommand = 'tarmirrorml'
         self.CancelMirror = 'cancelml'
