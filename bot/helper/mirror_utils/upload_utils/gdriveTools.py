@@ -20,7 +20,7 @@ from telegram import InlineKeyboardMarkup
 from bot.helper.telegram_helper import button_build
 from telegraph import Telegraph
 from bot import parent_id, DOWNLOAD_DIR, IS_TEAM_DRIVE, INDEX_URL, \
-    USE_SERVICE_ACCOUNTS, download_dict, telegraph_token, BUTTON_THREE_NAME, BUTTON_THREE_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, SHORTENER, SHORTENER_API
+    USE_SERVICE_ACCOUNTS, download_dict, telegraph_token, BUTTON_THREE_NAME, BUTTON_THREE_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, SHORTENER, SHORTENER_API, IMAGE_URL
 from bot.helper.ext_utils.bot_utils import *
 from bot.helper.ext_utils.fs_utils import get_mime_type, get_path_size
 
@@ -98,7 +98,7 @@ class GoogleDriveHelper:
                                      resumable=False)
         file_metadata = {
             'name': file_name,
-            'description': 'Uploaded using Mirror Bot',
+            'description': 'Uploaded using Slam Mirror Bot',
             'mimeType': mime_type,
         }
         if parent_id is not None:
@@ -152,7 +152,7 @@ class GoogleDriveHelper:
         # File body description
         file_metadata = {
             'name': file_name,
-            'description': 'Uploaded by Mirror Bot',
+            'description': 'Uploaded by Slam Mirror Bot',
             'mimeType': mime_type,
         }
         if parent_id is not None:
@@ -483,9 +483,9 @@ class GoogleDriveHelper:
                     content += f'<b> | <a href="https://telegra.ph/{self.path[nxt_page]}">Next</a></b>'
                     nxt_page += 1
             Telegraph(access_token=telegraph_token).edit_page(path = self.path[prev_page],
-                                 title = 'We◉NúbGang',
-                                 author_name='We◉NúbGang',
-                                 author_url='https://t.me/WeNubMirrors',
+                                 title = 'Slam Mirror Bot Search',
+                                 author_name='Slam Mirror Bot',
+                                 author_url='https://github.com/breakdowns/slam-mirrorbot',
                                  html_content=content)
         return
 
@@ -509,7 +509,7 @@ class GoogleDriveHelper:
                                                orderBy='name asc').execute()
         content_count = 0
         if response["files"]:
-            msg += f'<h4>{len(response["files"])} Results: {fileName}</h4><br><br>'
+            msg += f'<img src="{IMAGE_URL}" /><h4>{len(response["files"])} Results: {fileName}</h4><br><br>'
             for file in response.get('files', []):
                 if file.get('mimeType') == "application/vnd.google-apps.folder":  # Detect Whether Current Entity is a Folder or File.
                     furl = f"https://drive.google.com/drive/folders/{file.get('id')}"
@@ -562,9 +562,9 @@ class GoogleDriveHelper:
 
             for content in self.telegraph_content :
                 self.path.append(Telegraph(access_token=telegraph_token).create_page(
-                                                        title = 'We◉NúbGang',
-                                                        author_name='We◉NúbGang',
-                                                        author_url='https://t.me/WeNubMirrors',
+                                                        title = 'Slam Mirror Bot Search',
+                                                        author_name='Slam Mirror Bot',
+                                                        author_url='https://github.com/breakdowns/slam-mirrorbot',
                                                         html_content=content
                                                         )['path'])
 
