@@ -1,6 +1,6 @@
-[![We◉NúbGang | Mirrors](https://telegra.ph/file/3b9816240fff1c1fbfb9e.jpg)](https://t.me/WeNubMirrors/)
+[![Slam](https://telegra.ph/file/db03910496f06094f1f7a.jpg)](https://youtu.be/Pk_TthHfLeE)
 
-# Mirror Bot
+# Slam Mirror Bot
 ![GitHub Repo stars](https://img.shields.io/github/stars/breakdowns/slam-mirrorbot?color=blue&style=flat)
 ![GitHub forks](https://img.shields.io/github/forks/breakdowns/slam-mirrorbot?color=green&style=flat)
 ![GitHub issues](https://img.shields.io/github/issues/breakdowns/slam-mirrorbot)
@@ -12,7 +12,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/breakdowns/slam-mirrorbot)
 [![Slam Mirror Support](https://img.shields.io/badge/slam%20mirror%20bot-support%20group-blue)](https://t.me/SlamMirrorSupport)
 
-**Mirror Bot** is a Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
+**Slam Mirror Bot** is a Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
 
 # Features supported:
 
@@ -22,11 +22,13 @@
 - Nyaa.si and Sukebei Torrent search
 - Speedtest with picture results
 - Limiting Torrent size support
-- Sudo with database support
+- Sudo with Database support
+- Multiple Trackers support
 - Check Heroku dynos stats
 - Custom image support
 - Racaty.net support
 - Shell and Executor
+- Change to YT-DLP
 - Stickers module
 
 ## From Original Repos
@@ -36,7 +38,7 @@
 - Download/upload progress, speeds and ETAs
 - Mirror all Youtube-dl supported links
 - Docker support
-- Uploading To Team Drive
+- Uploading to Team Drive
 - Index Link support
 - Service Account support
 - Delete files from Drive
@@ -83,7 +85,7 @@ pip3 install -r requirements-cli.txt
     <summary><b>Click here for more details</b></summary>
 
 **1. Using ElephantSQL**
-- Go to https://elephantsql.com/ and create account (skip this if you already have ElephantDB accounti)
+- Go to https://elephantsql.com/ and create account (skip this if you already have ElephantSQL account)
 - Hit **Create New Instance**
 - Follow the further instructions in the screen
 - Hit **Select Region**
@@ -111,19 +113,21 @@ cp config_sample.env config.env
 _____REMOVE_THIS_LINE_____=True
 ```
 Fill up rest of the fields. Meaning of each fields are discussed below:
+### Required Field
 - **BOT_TOKEN**: The Telegram bot token that you get from [@BotFather](https://t.me/BotFather)
+- **TELEGRAM_API**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org DO NOT put this in quotes.
+- **TELEGRAM_HASH**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org
+- **OWNER_ID**: The Telegram user ID (not username) of the Owner of the bot
+- **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/breakdowns/slam-mirrorbot/tree/master#generate-database) to generate database. (**NOTE**: If you deploying on Heroku, no need to generate database manually, because it will automatic generate database when first deploying)
 - **GDRIVE_FOLDER_ID**: This is the folder ID of the Google Drive Folder to which you want to upload all the mirrors.
 - **DOWNLOAD_DIR**: The path to the local folder where the downloads should be downloaded to
 - **DOWNLOAD_STATUS_UPDATE_INTERVAL**: A short interval of time in seconds after which the Mirror progress message is updated. (I recommend to keep it `5` seconds at least)  
-- **OWNER_ID**: The Telegram user ID (not username) of the Owner of the bot
-- **AUTHORIZED_CHATS**: Fill user_id and chat_id of you want to authorize.
-- **DATABASE_URL**: Your Database URL. See [Generate Database](https://github.com/breakdowns/slam-mirrorbot/tree/master#generate-database) to generate database. (**NOTE**: If you deploying on Heroku, no need to generate database manually, because it will automatic generate database)
 - **AUTO_DELETE_MESSAGE_DURATION**: Interval of time (in seconds), after which the bot deletes it's message (and command message) which is expected to be viewed instantly. (**Note**: Set to `-1` to never automatically delete messages)
+### Optional Field
+- **AUTHORIZED_CHATS**: Fill user_id and chat_id of you want to authorize.
 - **IS_TEAM_DRIVE**: (Optional field) Set to `True` if `GDRIVE_FOLDER_ID` is from a Team Drive else `False` or Leave it empty.
 - **USE_SERVICE_ACCOUNTS**: (Optional field) (Leave empty if unsure) Whether to use Service Accounts or not. For this to work see [Using service accounts](https://github.com/breakdowns/slam-mirrorbot#generate-service-accounts-what-is-service-account) section below.
 - **INDEX_URL**: (Optional field) Refer to https://github.com/maple3142/GDIndex/ The URL should not have any trailing '/'
-- **API_KEY**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org DO NOT put this in quotes.
-- **API_HASH**: This is to authenticate to your Telegram account for downloading Telegram files. You can get this from https://my.telegram.org
 - **MEGA_API_KEY**: Mega.nz api key to mirror mega.nz links. Get it from [Mega SDK Page](https://mega.nz/sdk)
 - **MEGA_EMAIL_ID**: Your email id you used to sign up on mega.nz for using premium accounts (Leave th)
 - **MEGA_PASSWORD**: Your password for your mega.nz account
@@ -132,10 +136,10 @@ Fill up rest of the fields. Meaning of each fields are discussed below:
 - **STOP_DUPLICATE_MIRROR**: (Optional field) (Leave empty if unsure) if this field is set to `True`, bot will check file in drive, if it is present in Drive, downloading will be stopped. (**Note**: File will be checked using filename, not using filehash, so this feature is not perfect yet)
 - **ENABLE_FILESIZE_LIMIT**: Set it to `True` if you want to use `MAX_TORRENT_SIZE`.
 - **MAX_TORRENT_SIZE**: To limit the Torrent mirror size, Fill The amount you want to limit, examples: if you fill `15` it will limit `15gb`.
-- **HEROKU_API_KEY**: (Only if you deploying on Heroku) Your Heroku API key, get it from https://dashboard.heroku.com/account.
-- **HEROKU_APP_NAME**: (Only if you deploying on Heroku) Your Heroku app name.
 - **IMAGE_URL**: (Optional field) Show Image/Logo in /start message. Fill value of image your link image, use telegra.ph or any direct link image.
 - **UPTOBOX_TOKEN**: Uptobox token to mirror uptobox links. Get it from [Uptobox Premium Account](https://uptobox.com/my_account).
+- **HEROKU_API_KEY**: (Only if you deploying on Heroku) Your Heroku API key, get it from https://dashboard.heroku.com/account.
+- **HEROKU_APP_NAME**: (Only if you deploying on Heroku) Your Heroku app name.
 - **SHORTENER_API**: Fill your Shortener api key if you are using Shortener.
 - **SHORTENER**: (Optional field) if you want to use Shortener in Gdrive and index link, fill Shortener url here. Examples:
 ```
@@ -184,7 +188,7 @@ sudo docker run mirrorbot
 - Hit the **DEPLOY TO HEROKU** button and follow the further instructions in the screen
 
 **NOTE**: If you didn't upload **token.pickle**, uploading will not work. How to generate **token.pickle**? [Read here](https://github.com/breakdowns/slam-mirrorbot#getting-google-oauth-api-credential-file)
-<p><a href="https://heroku.com/deploy"> <img src="https://img.shields.io/badge/Heroku%20Deploy%20Dead-blueviolet?style=for-the-badge&logo=heroku" width="200""/></a></p>
+<p><a href="https://heroku.com/deploy"> <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blueviolet?style=for-the-badge&logo=heroku" width="200""/></a></p>
 
 ## Deploying on Heroku with heroku-cli and Goorm IDE
 <p><a href="https://telegra.ph/How-to-Deploy-a-Mirror-Bot-to-Heroku-with-CLI-05-06"> <img src="https://img.shields.io/badge/see%20on%20telegraph-grey?style=for-the-badge" width="190""/></a></p>
