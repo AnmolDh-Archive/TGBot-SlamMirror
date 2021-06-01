@@ -12,7 +12,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/breakdowns/slam-mirrorbot)
 [![Slam Mirror Support](https://img.shields.io/badge/slam%20mirror%20bot-support%20group-blue)](https://t.me/SlamMirrorSupport)
 
-**Slam Mirror Bot** is a Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
+**Slam Mirror Bot** is a multipurpose Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
 
 # Features supported:
 
@@ -26,9 +26,9 @@
 - Multiple Trackers support
 - Check Heroku dynos stats
 - Custom image support
+- Counting file/folder
 - Racaty.net support
 - Shell and Executor
-- Change to YT-DLP
 - Stickers module
 
 ## From Original Repos
@@ -145,14 +145,22 @@ Fill up rest of the fields. Meaning of each fields are discussed below:
 ```
 exe.io, gplinks.in, shrinkme.io, urlshortx.com, shortzon.com
 ```
+
 Above are the supported url Shorteners. Except these only some url Shorteners are supported.
 
 **Note**: You can limit maximum concurrent downloads by changing the value of **MAX_CONCURRENT_DOWNLOADS** in aria.sh. By default, it's set to `7`.
+### Add more buttons (Optional)
+Two buttons are already added of File Link and Index Link, you can add extra buttons too, these are optional, if you don't know what are below entries, simply leave them, don't fill anything in them.
+- **BUTTON_THREE_NAME**:
+- **BUTTON_THREE_URL**:
+- **BUTTON_FOUR_NAME**:
+- **BUTTON_FOUR_URL**:
+- **BUTTON_FIVE_NAME**:
+- **BUTTON_FIVE_URL**:
 
 </details>
 
 ## Getting Google OAuth API credential file
-
 - Visit the [Google Cloud Console](https://console.developers.google.com/apis/credentials)
 - Go to the OAuth Consent tab, fill it, and save.
 - Go to the Credentials tab and click Create Credentials -> OAuth Client ID
