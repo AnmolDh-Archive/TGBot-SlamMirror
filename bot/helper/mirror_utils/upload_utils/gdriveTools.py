@@ -98,7 +98,7 @@ class GoogleDriveHelper:
                                      resumable=False)
         file_metadata = {
             'name': file_name,
-            'description': 'Uploaded using Slam Mirror Bot',
+            'description': 'Uploaded using Mirror Bot',
             'mimeType': mime_type,
         }
         if parent_id is not None:
@@ -152,7 +152,7 @@ class GoogleDriveHelper:
         # File body description
         file_metadata = {
             'name': file_name,
-            'description': 'Uploaded by Slam Mirror Bot',
+            'description': 'Uploaded by Mirror Bot',
             'mimeType': mime_type,
         }
         try:
@@ -510,9 +510,9 @@ class GoogleDriveHelper:
                     content += f'<b> | <a href="https://telegra.ph/{self.path[nxt_page]}">Next</a></b>'
                     nxt_page += 1
             Telegraph(access_token=telegraph_token).edit_page(path = self.path[prev_page],
-                                 title = 'Slam Mirror Bot Search',
-                                 author_name='Slam Mirror Bot',
-                                 author_url='https://github.com/breakdowns/slam-mirrorbot',
+                                 title = 'We◉NúbGang',
+                                 author_name='We◉NúbGang',
+                                 author_url='https://t.me/WeNubMirrors',
                                  html_content=content)
         return
 
@@ -591,9 +591,9 @@ class GoogleDriveHelper:
 
             for content in self.telegraph_content :
                 self.path.append(Telegraph(access_token=telegraph_token).create_page(
-                                                        title = 'Slam Mirror Bot Search',
-                                                        author_name='Slam Mirror Bot',
-                                                        author_url='https://github.com/breakdowns/slam-mirrorbot',
+                                                        title = 'We◉NúbGang',
+                                                        author_name='We◉NúbGang',
+                                                        author_url='https://t.me/WeNubMirrors',
                                                         html_content=content
                                                         )['path'])
 
