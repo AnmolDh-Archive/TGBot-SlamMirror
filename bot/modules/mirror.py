@@ -178,10 +178,10 @@ class MirrorListener(listeners.MirrorListeners):
                         siurl = requests.get(f'https://{SHORTENER}/api?api={SHORTENER_API}&url={share_url}&format=text').text
                         siurls = requests.get(f'https://{SHORTENER}/api?api={SHORTENER_API}&url={share_urls}&format=text').text
                         buttons.buildbutton("⚡ Index Link", siurl)
-                        buttons.buildbutton("🌐 View Link", siurls)
+                       #buttons.buildbutton("🌐 View Link", siurls)
                     else:
                         buttons.buildbutton("⚡ Index Link", share_url)
-                        buttons.buildbutton("🌐 View Link", share_urls)
+                        #buttons.buildbutton("🌐 View Link", share_urls)
             if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
                 buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
             if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
