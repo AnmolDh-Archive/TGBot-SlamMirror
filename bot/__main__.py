@@ -20,7 +20,7 @@ from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, anime, stickers, search, delete, speedtest, usage, mediainfo, count
 
-now=datetime.now(pytz.timezone('Asia/Kolkata'))
+now=datetime.now(pytz.timezone('Asia/Jakarta'))
 
 
 @run_async
@@ -52,12 +52,12 @@ def stats(update, context):
 @run_async
 def start(update, context):
     start_string = f'''
-This bot can mirror all your links to Google drive!
+This bot can mirror all your links to Google Drive!
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
     buttons = button_build.ButtonMaker()
-    buttons.buildbutton("Mirror Group", "https://t.me/WeNubMirrors")
-    buttons.buildbutton("We◉NúbGang", "https://t.me/WeNubGang")
+    buttons.buildbutton("Repo", "https://github.com/breakdowns/slam-mirrorbot")
+    buttons.buildbutton("Support Group", "https://t.me/SlamMirrorSupport")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     LOGGER.info('UID: {} - UN: {} - MSG: {}'.format(update.message.chat.id, update.message.chat.username, update.message.text))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
@@ -176,6 +176,14 @@ def bot_help(update, context):
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
 
 /{BotCommands.SpeedCommand}: Check Internet Speed of the Host
+
+/mediainfo: Get detailed info about replied media.
+
+/tshelp: Get help for Torrent search module.
+
+/weebhelp: Get help for Anime, Manga, and Character module.
+
+/stickerhelp: Get help for Stickers module.
 '''
 
     if CustomFilters.sudo_user(update) or CustomFilters.owner_filter(update):
@@ -189,9 +197,19 @@ BotCommand(f'{BotCommands.MirrorCommand}', 'Start Mirroring'),
 BotCommand(f'{BotCommands.TarMirrorCommand}','Upload tar (zipped) file'),
 BotCommand(f'{BotCommands.UnzipMirrorCommand}','Extract files'),
 BotCommand(f'{BotCommands.CloneCommand}','Copy file/folder to Drive'),
+BotCommand(f'{BotCommands.CountCommand}','Count file/folder of Drive link'),
 BotCommand(f'{BotCommands.WatchCommand}','Mirror YT-DL support link'),
 BotCommand(f'{BotCommands.TarWatchCommand}','Mirror Youtube playlist link as tar'),
-BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message')]
+BotCommand(f'{BotCommands.CancelMirror}','Cancel a task'),
+BotCommand(f'{BotCommands.CancelAllCommand}','Cancel all tasks'),
+BotCommand(f'{BotCommands.DeleteCommand}','Delete file from Drive'),
+BotCommand(f'{BotCommands.ListCommand}',' [query] Searches files in Drive'),
+BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message'),
+BotCommand(f'{BotCommands.StatsCommand}','Bot Usage Stats'),
+BotCommand(f'{BotCommands.HelpCommand}','Get Detailed Help'),
+BotCommand(f'{BotCommands.SpeedCommand}','Check Speed of the host'),
+BotCommand(f'{BotCommands.LogCommand}','Bot Log [owner/sudo only]'),
+BotCommand(f'{BotCommands.RestartCommand}','Restart bot [owner/sudo only]')]
 
 
 def main():
@@ -202,7 +220,6 @@ def main():
             chat_id, msg_id = map(int, f)
         bot.edit_message_text("Restarted successfully!", chat_id, msg_id)
         os.remove(".restartmsg")
-
     bot.set_my_commands(botcmds)
 
     start_handler = CommandHandler(BotCommands.StartCommand, start)
