@@ -80,9 +80,9 @@ def update_all_messages():
         for download in list(download_dict.values()):
             speedy = download.speed()
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                if 'KiB/s' in speedy:
+                if 'KB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('K')[0]) * 1024
-                elif 'MiB/s' in speedy:
+                elif 'MB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('M')[0]) * 1048576 
             if download.status() == MirrorStatus.STATUS_UPLOADING:
                 if 'KB/s' in speedy:
@@ -91,7 +91,7 @@ def update_all_messages():
                     uldl_bytes += float(speedy.split('M')[0]) * 1048576
         dlspeed = get_readable_file_size(dlspeed_bytes)
         ulspeed = get_readable_file_size(uldl_bytes)
-        msg += f"\n<b>FREE:</b> {free} | <b>UPTIME:</b> {currentTime}\n<b>DL:</b> {dlspeed}ps 🔻 | <b>UL:</b> {ulspeed}ps 🔺\n"
+        msg += f"\n<b>DL:</b> {dlspeed}/s 🔻 | <b>UL:</b> {ulspeed}/s 🔺"
     with status_reply_dict_lock:
         for chat_id in list(status_reply_dict.keys()):
             if status_reply_dict[chat_id] and msg != status_reply_dict[chat_id].text:
@@ -118,9 +118,9 @@ def sendStatusMessage(msg, bot):
         for download in list(download_dict.values()):
             speedy = download.speed()
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                if 'KiB/s' in speedy:
+                if 'KB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('K')[0]) * 1024
-                elif 'MiB/s' in speedy:
+                elif 'MB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('M')[0]) * 1048576 
             if download.status() == MirrorStatus.STATUS_UPLOADING:
                 if 'KB/s' in speedy:
@@ -129,7 +129,7 @@ def sendStatusMessage(msg, bot):
                     uldl_bytes += float(speedy.split('M')[0]) * 1048576
         dlspeed = get_readable_file_size(dlspeed_bytes)
         ulspeed = get_readable_file_size(uldl_bytes)
-        progress += f"\n<b>FREE:</b> {free} | <b>UPTIME:</b> {currentTime}\n<b>DL:</b> {dlspeed}ps 🔻 | <b>UL:</b> {ulspeed}ps 🔺\n"
+        progress += f"\n<b>DL:</b> {dlspeed}ps 🔻 | <b>UL:</b> {ulspeed}ps 🔺"
     with status_reply_dict_lock:
         if msg.message.chat.id in list(status_reply_dict.keys()):
             try:
