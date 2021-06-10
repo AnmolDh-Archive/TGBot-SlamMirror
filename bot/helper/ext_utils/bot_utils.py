@@ -101,12 +101,12 @@ def get_readable_message():
                 if download.status() == MirrorStatus.STATUS_DOWNLOADING:
                     msg += f"\n𝐃𝐨𝐧𝐞: <i>{get_readable_file_size(download.processed_bytes())} of {download.size()}</i>"
                 else:
-                    msg += f"\n𝐃𝐨𝐧𝐞: <i>{get_readable_file_size(download.processed_bytes())} of {download.size()}</i>"
-                msg += f"\n𝐒𝐩𝐞𝐞𝐝: <i>{download.speed()}</i> | 𝐄𝐓𝐀: <i>{download.eta()}</i> "
+                    msg += f"\n𝐃𝐨𝐧𝐞: {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                msg += f"\n𝐒𝐩𝐞𝐞𝐝: {download.speed()} | 𝐄𝐓𝐀: {download.eta()}"
                 # if hasattr(download, 'is_torrent'):
                 try:
-                    msg += f"\n𝐒𝐞𝐞𝐝𝐞𝐫𝐬: <i>{download.aria_download().num_seeders}</i>" \
-                        f" | 𝐏𝐞𝐞𝐫𝐬: <i>{download.aria_download().connections}</i>"
+                    msg += f"\n𝐒𝐞𝐞𝐝𝐞𝐫𝐬: {download.aria_download().num_seeders}" \
+                        f" | 𝐏𝐞𝐞𝐫𝐬: {download.aria_download().connections}"
                 except:
                     pass
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
