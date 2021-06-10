@@ -129,11 +129,10 @@ app = Client(':memory:', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_t
 
 #Generate Telegraph Token
 sname = ''.join(random.SystemRandom().choices(string.ascii_letters, k=8))
-LOGGER.info("Generating Telegraph Token using '" + sname + "' name")
+LOGGER.info("Generating TELEGRAPH_TOKEN using '" + sname + "' name")
 telegraph = Telegraph()
 telegraph.create_account(short_name=sname)
 telegraph_token = telegraph.get_access_token()
-LOGGER.info("Telegraph Token Generated: '" + telegraph_token + "'")
 
 try:
     MEGA_API_KEY = getConfig('MEGA_API_KEY')
@@ -183,6 +182,18 @@ try:
 except KeyError:
     INDEX_URL = None
 try:
+    CLONE_LIMIT = getConfig('CLONE_LIMIT')
+    if len(CLONE_LIMIT) == 0:
+        CLONE_LIMIT = None
+except KeyError:
+    CLONE_LIMIT = None
+try:
+    MEGA_LIMIT = getConfig('MEGA_LIMIT')
+    if len(MEGA_LIMIT) == 0:
+        MEGA_LIMIT = None
+except KeyError:
+    MEGA_LIMIT = None
+try:
     BUTTON_FOUR_NAME = getConfig('BUTTON_FOUR_NAME')
     BUTTON_FOUR_URL = getConfig('BUTTON_FOUR_URL')
     if len(BUTTON_FOUR_NAME) == 0 or len(BUTTON_FOUR_URL) == 0:
@@ -214,6 +225,30 @@ try:
         STOP_DUPLICATE_MIRROR = False
 except KeyError:
     STOP_DUPLICATE_MIRROR = False
+try:
+    STOP_DUPLICATE_MEGA = getConfig('STOP_DUPLICATE_MEGA')
+    if STOP_DUPLICATE_MEGA.lower() == 'true':
+        STOP_DUPLICATE_MEGA = True
+    else:
+        STOP_DUPLICATE_MEGA = False
+except KeyError:
+    STOP_DUPLICATE_MEGA = False
+try:
+    VIEW_LINK = getConfig('VIEW_LINK')
+    if VIEW_LINK.lower() == 'true':
+        VIEW_LINK = True
+    else:
+        VIEW_LINK = False
+except KeyError:
+    VIEW_LINK = False
+try:
+    STOP_DUPLICATE_CLONE = getConfig('STOP_DUPLICATE_CLONE')
+    if STOP_DUPLICATE_CLONE.lower() == 'true':
+        STOP_DUPLICATE_CLONE = True
+    else:
+        STOP_DUPLICATE_CLONE = False
+except KeyError:
+    STOP_DUPLICATE_CLONE = False
 try:
     IS_TEAM_DRIVE = getConfig('IS_TEAM_DRIVE')
     if IS_TEAM_DRIVE.lower() == 'true':
@@ -260,6 +295,13 @@ try:
         IMAGE_URL = 'https://telegra.ph/file/db03910496f06094f1f7a.jpg'
 except KeyError:
     IMAGE_URL = 'https://telegra.ph/file/db03910496f06094f1f7a.jpg'
+
+IGNORE_PENDING_REQUESTS = False
+try:
+    if getConfig("IGNORE_PENDING_REQUESTS").lower() == "true":
+        IGNORE_PENDING_REQUESTS = True
+except KeyError:
+    pass
 
 updater = tg.Updater(token=BOT_TOKEN, use_context=True)
 bot = updater.bot

@@ -11,7 +11,7 @@ import time
 
 from telegram import ParseMode, BotCommand
 from telegram.ext import CommandHandler, run_async
-from bot import bot, dispatcher, updater, botStartTime, IMAGE_URL
+from bot import bot, dispatcher, updater, botStartTime, IMAGE_URL, IGNORE_PENDING_REQUESTS
 from bot.helper.ext_utils import fs_utils
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.message_utils import *
@@ -141,7 +141,7 @@ def bot_help(update, context):
 
 /shell: Run commands in Shell (Terminal).
 
-/mediainfo: Get detailed info about replied media.
+/mediainfo: Get detailed info about replied media (Only for Telegram file).
 
 /tshelp: Get help for Torrent search module.
 
@@ -189,6 +189,7 @@ BotCommand(f'{BotCommands.MirrorCommand}', 'Start Mirroring'),
 BotCommand(f'{BotCommands.TarMirrorCommand}','Upload tar (zipped) file'),
 BotCommand(f'{BotCommands.UnzipMirrorCommand}','Extract files'),
 BotCommand(f'{BotCommands.CloneCommand}','Copy file/folder to Drive'),
+BotCommand(f'{BotCommands.CountCommand}','Count file/folder of Drive link'),
 BotCommand(f'{BotCommands.WatchCommand}','Mirror YT-DL support link'),
 BotCommand(f'{BotCommands.TarWatchCommand}','Mirror Youtube playlist link as tar'),
 BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message')]
@@ -220,7 +221,7 @@ def main():
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(stats_handler)
     dispatcher.add_handler(log_handler)
-    updater.start_polling()
+    updater.start_polling(IGNORE_PENDING_REQUESTS)
     LOGGER.info("Bot Started!")
     signal.signal(signal.SIGINT, fs_utils.exit_clean_up)
 
