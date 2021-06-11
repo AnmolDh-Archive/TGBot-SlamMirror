@@ -99,7 +99,7 @@ def get_readable_message():
             if download.status() != MirrorStatus.STATUS_ARCHIVING and download.status() != MirrorStatus.STATUS_EXTRACTING:
                 msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                    msg += f"\n𝐃𝐨𝐧𝐞: <i>{get_readable_file_size(download.processed_bytes())} of {download.size()}</i>"
+                    msg += f"\n𝐃𝐨𝐧𝐞: {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 else:
                     msg += f"\n𝐃𝐨𝐧𝐞: {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 msg += f"\n𝐒𝐩𝐞𝐞𝐝: {download.speed()} | 𝐄𝐓𝐀: {download.eta()}"
