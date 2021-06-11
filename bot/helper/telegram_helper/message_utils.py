@@ -80,9 +80,9 @@ def update_all_messages():
         for download in list(download_dict.values()):
             speedy = download.speed()
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                if 'KB/s' in speedy:
+                if 'KiB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('K')[0]) * 1024
-                elif 'MB/s' in speedy:
+                elif 'MiB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('M')[0]) * 1048576 
             if download.status() == MirrorStatus.STATUS_UPLOADING:
                 if 'KB/s' in speedy:
@@ -118,9 +118,9 @@ def sendStatusMessage(msg, bot):
         for download in list(download_dict.values()):
             speedy = download.speed()
             if download.status() == MirrorStatus.STATUS_DOWNLOADING:
-                if 'KB/s' in speedy:
+                if 'KiB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('K')[0]) * 1024
-                elif 'MB/s' in speedy:
+                elif 'MiB/s' in speedy:
                     dlspeed_bytes += float(speedy.split('M')[0]) * 1048576 
             if download.status() == MirrorStatus.STATUS_UPLOADING:
                 if 'KB/s' in speedy:
