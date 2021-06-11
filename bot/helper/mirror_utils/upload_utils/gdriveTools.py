@@ -334,7 +334,7 @@ class GoogleDriveHelper:
             if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
                 dir_id = self.create_directory(meta.get('name'), parent_id)
                 result = self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id)
-                msg += f'𝐅𝐢𝐥𝐞𝐧𝐚𝐦𝐞: <i>{meta.get("name")}</i>\n\n𝐒𝐢𝐳𝐞: <i>{get_readable_file_size(self.transferred_size)}</i>'
+                msg += f'𝐅𝐢𝐥𝐞𝐧𝐚𝐦𝐞: <code>{meta.get("name")}</code>\n\n𝐒𝐢𝐳𝐞: <i>{get_readable_file_size(self.transferred_size)}</i>'
                 #msg += f'\n<b>Type: </b><code>Folder</code>'
                 #msg += f'\n<b>SubFolders: </b><code>{self.total_folders}</code>'
                 #msg += f'\n<b>Files: </b><code>{self.total_files}</code>'
@@ -361,7 +361,7 @@ class GoogleDriveHelper:
                     buttons.buildbutton(f"{BUTTON_SIX_NAME}", f"{BUTTON_SIX_URL}")
             else:
                 file = self.copyFile(meta.get('id'), parent_id)
-                msg += f'𝐅𝐢𝐥𝐞𝐧𝐚𝐦𝐞: <i>{file.get("name")}</i>'
+                msg += f'𝐅𝐢𝐥𝐞𝐧𝐚𝐦𝐞: <code>{file.get("name")}</code>'
                 durl = self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))
                 buttons = button_build.ButtonMaker()
                 if SHORTENER is not None and SHORTENER_API is not None:
