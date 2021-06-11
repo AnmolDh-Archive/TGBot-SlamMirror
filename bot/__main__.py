@@ -46,7 +46,7 @@ def stats(update, context):
             f'𝐂𝐏𝐔: {cpuUsage}%\n' \
             f'𝐑𝐀𝐌: {memory}%\n' \
             f'𝐃𝐈𝐒𝐊: {disk}%'
-    update.effective_message(stats, parse_mode=ParseMode.HTML)
+    sendMessage(stats, context.bot, update)
 
 
 @run_async
