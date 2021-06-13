@@ -10,8 +10,8 @@ import pytz
 import time
 
 from telegram import ParseMode, BotCommand
-from telegram.ext import CommandHandler, run_async
-from bot import bot, dispatcher, updater, botStartTime, IMAGE_URL
+from telegram.ext import CommandHandler
+from bot import bot, dispatcher, updater, botStartTime, IMAGE_URL, IGNORE_PENDING_REQUESTS
 from bot.helper.ext_utils import fs_utils
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.message_utils import *
@@ -20,10 +20,9 @@ from .helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper import button_build
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, anime, stickers, search, delete, speedtest, usage, mediainfo, count
 
-now=datetime.now(pytz.timezone('Asia/Kolkata'))
+now=datetime.now(pytz.timezone('Asia/Jakarta'))
 
 
-@run_async
 def stats(update, context):
     currentTime = get_readable_time(time.time() - botStartTime)
     current = now.strftime('%Y/%m/%d %I:%M:%S %p')
@@ -36,28 +35,27 @@ def stats(update, context):
     cpuUsage = psutil.cpu_percent(interval=0.5)
     memory = psutil.virtual_memory().percent
     disk = psutil.disk_usage('/').percent
-    stats = f'𝐁𝐨𝐭 𝐔𝐩𝐭𝐢𝐦𝐞: {currentTime}\n' \
-            f'𝐒𝐭𝐚𝐫𝐭 𝐓𝐢𝐦𝐞: {current}\n' \
-            f'𝐓𝐨𝐭𝐚𝐥 𝐃𝐢𝐬𝐤 𝐒𝐩𝐚𝐜𝐞: {total}\n' \
-            f'𝐔𝐬𝐞𝐝: {used}  ' \
-            f'𝐅𝐫𝐞𝐞: {free}\n\n' \
-            f'📊𝐃𝐚𝐭𝐚 𝐔𝐬𝐚𝐠𝐞📊\n𝐔𝐩𝐥𝐨𝐚𝐝: {sent}\n' \
-            f'𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝: {recv}\n\n' \
-            f'𝐂𝐏𝐔: {cpuUsage}%\n' \
-            f'𝐑𝐀𝐌: {memory}%\n' \
-            f'𝐃𝐈𝐒𝐊: {disk}%'
-    sendMessage(stats, context.bot, update)
+    stats = f'<b>Bot Uptime:</b> {currentTime}\n' \
+            f'<b>Start Time:</b> {current}\n' \
+            f'<b>Total Disk Space:</b> {total}\n' \
+            f'<b>Used:</b> {used}  ' \
+            f'<b>Free:</b> {free}\n\n' \
+            f'📊Data Usage📊\n<b>Upload:</b> {sent}\n' \
+            f'<b>Download:</b> {recv}\n\n' \
+            f'<b>CPU:</b> {cpuUsage}%\n' \
+            f'<b>RAM:</b> {memory}%\n' \
+            f'<b>DISK:</b> {disk}%'
+    update.effective_message.reply_photo(IMAGE_URL, stats, parse_mode=ParseMode.HTML)
 
 
-@run_async
 def start(update, context):
     start_string = f'''
 This bot can mirror all your links to Google Drive!
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
     buttons = button_build.ButtonMaker()
-    buttons.buildbutton("Mirror Group", "https://t.me/WeNubMirrors")
-    buttons.buildbutton("We◉NúbGang", "https://t.me/WeNubGang")
+    buttons.buildbutton("Repo", "https://github.com/breakdowns/slam-mirrorbot")
+    buttons.buildbutton("Support Group", "https://t.me/SlamMirrorSupport")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     LOGGER.info('UID: {} - UN: {} - MSG: {}'.format(update.message.chat.id, update.message.chat.username, update.message.text))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
@@ -69,7 +67,6 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
         sendMessage(f"Oops! not a Authorized user.", context.bot, update)
 
 
-@run_async
 def restart(update, context):
     restart_message = sendMessage("Restarting, Please wait!", context.bot, update)
     LOGGER.info(f'Restarting the Bot...')
@@ -81,7 +78,6 @@ def restart(update, context):
     os.execl(executable, executable, "-m", "bot")
 
 
-@run_async
 def ping(update, context):
     start_time = int(round(time.time() * 1000))
     reply = sendMessage("Starting Ping", context.bot, update)
@@ -89,12 +85,10 @@ def ping(update, context):
     editMessage(f'{end_time - start_time} ms', reply)
 
 
-@run_async
 def log(update, context):
     sendLogFile(context.bot, update)
 
 
-@run_async
 def bot_help(update, context):
     help_string_adm = f'''
 /{BotCommands.HelpCommand}: To get this message
@@ -176,6 +170,14 @@ def bot_help(update, context):
 /{BotCommands.StatsCommand}: Show Stats of the machine the bot is hosted on
 
 /{BotCommands.SpeedCommand}: Check Internet Speed of the Host
+
+/mediainfo: Get detailed info about replied media (Only for Telegram file).
+
+/tshelp: Get help for Torrent search module.
+
+/weebhelp: Get help for Anime, Manga, and Character module.
+
+/stickerhelp: Get help for Stickers module.
 '''
 
     if CustomFilters.sudo_user(update) or CustomFilters.owner_filter(update):
@@ -192,7 +194,16 @@ BotCommand(f'{BotCommands.CloneCommand}','Copy file/folder to Drive'),
 BotCommand(f'{BotCommands.CountCommand}','Count file/folder of Drive link'),
 BotCommand(f'{BotCommands.WatchCommand}','Mirror YT-DL support link'),
 BotCommand(f'{BotCommands.TarWatchCommand}','Mirror Youtube playlist link as tar'),
-BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message')]
+BotCommand(f'{BotCommands.CancelMirror}','Cancel a task'),
+BotCommand(f'{BotCommands.CancelAllCommand}','Cancel all tasks'),
+BotCommand(f'{BotCommands.DeleteCommand}','Delete file from Drive'),
+BotCommand(f'{BotCommands.ListCommand}',' [query] Searches files in Drive'),
+BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message'),
+BotCommand(f'{BotCommands.StatsCommand}','Bot Usage Stats'),
+BotCommand(f'{BotCommands.HelpCommand}','Get Detailed Help'),
+BotCommand(f'{BotCommands.SpeedCommand}','Check Speed of the host'),
+BotCommand(f'{BotCommands.LogCommand}','Bot Log [owner/sudo only]'),
+BotCommand(f'{BotCommands.RestartCommand}','Restart bot [owner/sudo only]')]
 
 
 def main():
@@ -205,23 +216,23 @@ def main():
         os.remove(".restartmsg")
     bot.set_my_commands(botcmds)
 
-    start_handler = CommandHandler(BotCommands.StartCommand, start)
+    start_handler = CommandHandler(BotCommands.StartCommand, start, run_async=True)
     ping_handler = CommandHandler(BotCommands.PingCommand, ping,
-                                  filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
+                                  filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     restart_handler = CommandHandler(BotCommands.RestartCommand, restart,
-                                     filters=CustomFilters.owner_filter | CustomFilters.sudo_user)
+                                     filters=CustomFilters.owner_filter | CustomFilters.sudo_user, run_async=True)
     help_handler = CommandHandler(BotCommands.HelpCommand,
-                                  bot_help, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
+                                  bot_help, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
     stats_handler = CommandHandler(BotCommands.StatsCommand,
-                                   stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
-    log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter | CustomFilters.sudo_user)
+                                   stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+    log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter | CustomFilters.sudo_user, run_async=True)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(restart_handler)
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(stats_handler)
     dispatcher.add_handler(log_handler)
-    updater.start_polling()
+    updater.start_polling(drop_pending_updates=IGNORE_PENDING_REQUESTS)
     LOGGER.info("Bot Started!")
     signal.signal(signal.SIGINT, fs_utils.exit_clean_up)
 
