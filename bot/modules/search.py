@@ -677,7 +677,7 @@ def searchhelp(update, context):
 • /ytsml <i>[search query]</i>
 • /piratebayml <i>[search query]</i>
 '''
-    sendMessage(help_string, context.bot, update)
+    update.effective_message.reply_photo(IMAGE_URL, help_string, parse_mode=ParseMode.HTML)
     
     
 SEARCHHELP_HANDLER = CommandHandler("tshelpml", searchhelp, filters=(CustomFilters.authorized_chat | CustomFilters.authorized_user) & CustomFilters.mirror_owner_filter, run_async=True)
