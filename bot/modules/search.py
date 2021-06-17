@@ -69,14 +69,14 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['ts', 'nyaa', 'nyaasi']))
+@app.on_message(filters.command(['tsml', 'nyaaml', 'nyaasiml']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sts', 'sukebei']))
+@app.on_message(filters.command(['stsml', 'sukebeiml']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -155,7 +155,7 @@ query = None
 
 #====== 1337x =======#
 
-@app.on_message(filters.command(["1337x"]))
+@app.on_message(filters.command(["1337xml"]))
 async def find_1337x(_, message):
     global m
     global i
@@ -286,7 +286,7 @@ async def callback_query_previous_1337x(_, message):
 
 #====== piratebay =======#
 
-@app.on_message(filters.command(["piratebay"]))
+@app.on_message(filters.command(["piratebayml"]))
 async def find_piratebay(_, message):
     global m
     global i
@@ -408,7 +408,7 @@ async def callback_query_previous_piratebay(_, message):
 
 #====== tgx =======#
 
-@app.on_message(filters.command(["tgx"]))
+@app.on_message(filters.command(["tgxml"]))
 async def find_tgx(_, message):
     global m
     global i
@@ -527,7 +527,7 @@ async def callback_query_previous_tgx(_, message):
 
 #====== yts =======#
 
-@app.on_message(filters.command(["yts"]))
+@app.on_message(filters.command(["ytsml"]))
 async def find_yts(_, message):
     global m
     global i
@@ -665,20 +665,20 @@ async def callback_query_delete(_, message):
 
 def searchhelp(update, context):
     help_string = '''
-• /ts <i>[search query]</i>
-• /nyaa <i>[search query]</i>
-• /nyaasi <i>[search query]</i>
+• /tsml <i>[search query]</i>
+• /nyaaml <i>[search query]</i>
+• /nyaasiml <i>[search query]</i>
 
-• /sts <i>[search query]</i>
-• /sukebei <i>[search query]</i>
+• /stsml <i>[search query]</i>
+• /sukebeiml <i>[search query]</i>
 
-• /1337x <i>[search query] (Sometimes Work XD)</i>
-• /tgx <i>[search query]</i>
-• /yts <i>[search query]</i>
-• /piratebay <i>[search query]</i>
+• /1337xml <i>[search query] (Sometimes Work XD)</i>
+• /tgxml <i>[search query]</i>
+• /ytsml <i>[search query]</i>
+• /piratebayml <i>[search query]</i>
 '''
-    update.effective_message.reply_photo(IMAGE_URL, help_string, parse_mode=ParseMode.HTML)
+    sendMessage(help_string, context.bot, update)
     
     
-SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp, filters=(CustomFilters.authorized_chat | CustomFilters.authorized_user) & CustomFilters.mirror_owner_filter, run_async=True)
+SEARCHHELP_HANDLER = CommandHandler("tshelpml", searchhelp, filters=(CustomFilters.authorized_chat | CustomFilters.authorized_user) & CustomFilters.mirror_owner_filter, run_async=True)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
