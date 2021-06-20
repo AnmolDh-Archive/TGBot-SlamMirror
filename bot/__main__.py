@@ -173,7 +173,7 @@ def bot_help(update, context):
 
 /{BotCommands.MediaInfoCommand}: Get detailed info about replied media (Only for Telegram file).
 
-/tshelpcl: Get help for Torrent search module.
+/tshelpml: Get help for Torrent search module.
 '''
 
     if CustomFilters.sudo_user(update) or CustomFilters.owner_filter(update):
