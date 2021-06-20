@@ -93,7 +93,7 @@ def get_readable_message():
     with download_dict_lock:
         msg = ""
         for download in list(download_dict.values()):
-            msg += f"<b>✥═══════ 𝑴𝒊𝒓𝒓𝒐𝒓𝑳𝒊𝒏𝒌 ═══════✥</b>"
+            msg += f"<b>✥══════ 𝑴𝒊𝒓𝒓𝒐𝒓𝑳𝒊𝒏𝒌 ══════✥</b>"
             msg += f"\n\n𝐅𝐢𝐥𝐞𝐧𝐚𝐦𝐞: <code>{download.name()}</code>"
             msg += f"\n{download.status()}"
             if download.status() != MirrorStatus.STATUS_ARCHIVING and download.status() != MirrorStatus.STATUS_EXTRACTING:
