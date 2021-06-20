@@ -71,14 +71,14 @@ async def return_search(query, page=1, sukebei=False):
 message_info = dict()
 ignore = set()
 
-@app.on_message(filters.command(['nyaacl']))
+@app.on_message(filters.command(['nyaaml']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sukebeicl']))
+@app.on_message(filters.command(['sukebeiml']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -312,19 +312,19 @@ for command, value in torrents_dict.items():
 
 def searchhelp(update, context):
     help_string = '''
-• /nyaacl <i>[search query]</i>
-• /sukebeicl <i>[search query]</i>
-• /1337xcl <i>[search query]</i>
-• /piratebaycl <i>[search query]</i>
-• /tgxcl <i>[search query]</i>
-• /ytscl <i>[search query]</i>
-• /eztvcl <i>[search query]</i>
-• /torlockcl <i>[search query]</i>
-• /rarbgcl <i>[search query]</i>
-• /tscl <i>[search query]</i>
+• /nyaaml <i>[search query]</i>
+• /sukebeiml <i>[search query]</i>
+• /1337xml <i>[search query]</i>
+• /piratebayml <i>[search query]</i>
+• /tgxml <i>[search query]</i>
+• /ytsml <i>[search query]</i>
+• /eztvml <i>[search query]</i>
+• /torlockml <i>[search query]</i>
+• /rarbgml <i>[search query]</i>
+• /tsml <i>[search query]</i>
 '''
     update.effective_message.reply_photo(IMAGE_URL, help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler("tshelpcl", searchhelp, filters=(CustomFilters.authorized_chat | CustomFilters.authorized_user) & CustomFilters.mirror_owner_filter, run_async=True)
+SEARCHHELP_HANDLER = CommandHandler("tshelpml", searchhelp, filters=(CustomFilters.authorized_chat | CustomFilters.authorized_user) & CustomFilters.mirror_owner_filter, run_async=True)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
