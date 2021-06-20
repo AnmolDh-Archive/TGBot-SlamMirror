@@ -141,7 +141,7 @@ def bot_help(update, context):
 
 /{BotCommands.ShellCommand}: Run commands in Shell (Terminal).
 
-/tshelp: Get help for Torrent search module.
+/tshelpml: Get help for Torrent search module.
 '''
 
     help_string = f'''
