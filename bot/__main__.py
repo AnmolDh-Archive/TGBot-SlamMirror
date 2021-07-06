@@ -192,7 +192,7 @@ BotCommand(f'{BotCommands.TarWatchCommand}','Mirror Youtube playlist link as tar
 BotCommand(f'{BotCommands.StatusCommand}','Get Mirror Status message')]
 
 
-def main():
+def main(update, context):
     fs_utils.start_cleanup()
     # Check if the bot is restarting
     if os.path.isfile(".restartmsg"):
@@ -219,6 +219,7 @@ def main():
     dispatcher.add_handler(stats_handler)
     dispatcher.add_handler(log_handler)
     updater.start_polling(drop_pending_updates=IGNORE_PENDING_REQUESTS)
+    sendMessage(f"Bot Booted Successfully!", context.bot, update)
     LOGGER.info("Bot Started!")
     signal.signal(signal.SIGINT, fs_utils.exit_clean_up)
 
