@@ -220,6 +220,7 @@ def main():
     dispatcher.add_handler(log_handler)
     updater.start_polling(drop_pending_updates=IGNORE_PENDING_REQUESTS)
     LOGGER.info("Bot Started!")
+    sendMessage(f"Bot Booted Successfully!", context.bot, update)
     signal.signal(signal.SIGINT, fs_utils.exit_clean_up)
 
 app.start()
